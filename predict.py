@@ -11,7 +11,15 @@ def load_model(filename="model.csv"):
 def predict_price(mileage, theta0, theta1):
     if mileage < 0:
         raise ValueError("Mileage cannot be negative.")
-    return theta0 + theta1 * mileage
+    if mileage > 1e6:
+        print("⚠️ Warning: The entered mileage is unrealistic for a car."
+                "The prediction may not be accurate.")
+    estimated_price = theta0 + theta1 * mileage
+    if estimated_price < 0:
+        print("⚠️ Warning: The predicted price is negative."
+                "The prediction may not be accurate.")
+        estimated_price = 0.0
+    return estimated_price
 
 
 if __name__ == '__main__':
